@@ -1,4 +1,4 @@
-{% set version = '1.1.1.4' %}
+{% set version = '1.1.1.6' %}
 
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
@@ -8,11 +8,10 @@ package:
   version: {{ version|replace("-", "_") }}
 
 source:
-  fn: dygraphs_{{ version }}.tar.gz
   url:
     - {{ cran_mirror }}/src/contrib/dygraphs_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/dygraphs/dygraphs_{{ version }}.tar.gz
-  sha256: 69d1c97573b650cfbf24d11948e5904b103fdb4b3396d244aab3f3dc0f4e8f6f
+  sha256: c3d331f30012e721a048e04639f60ea738cd7e54e4f930ac9849b95f0f005208
 
 build:
   merge_build_host: True  # [win]
@@ -27,6 +26,7 @@ build:
 # Suggests: testthat
 requirements:
   build:
+    - {{posix}}zip               # [win]
 
   host:
     - r-base
@@ -47,8 +47,7 @@ requirements:
 test:
   commands:
     # You can put additional test commands to be run here.
-    - xvfb-run $R -e "library('dygraphs')"  # [linux]
-    - $R -e "library('dygraphs')"           # [osx]
+    - $R -e "library('dygraphs')"           # [not win]
     - "\"%R%\" -e \"library('dygraphs')\""  # [win]
 
   # You can also put a file called run_test.py, run_test.sh, or run_test.bat
@@ -77,10 +76,8 @@ extra:
 # Package: dygraphs
 # Type: Package
 # Title: Interface to 'Dygraphs' Interactive Time Series Charting Library
-# Version: 1.1.1.4
-# Date: 2017-01-04
-# Authors@R: c( person("Dan", "Vanderkam", role = c("aut", "cph"), comment = "dygraphs library in htmlwidgets/lib, http://dygraphs.com/"), person("JJ", "Allaire", role = c("aut", "cre"), comment = "R interface", email = "jj@rstudio.com"), person(family = "RStudio", role = "cph"), person("Jonathan", "Owen", role = c("aut", "cph")), person("Daniel", "Gromer", role = c("aut", "cph")), person("Petr", "Shevtsov", role = c("aut", "cph")), person("Benoit", "Thieurmel", role = c("aut", "cph")), person(family = "jQuery Foundation", role = "cph", comment = "jQuery library"), person(family = "jQuery contributors", role = c("ctb", "cph"), comment = "jQuery library; authors listed in inst/htmlwidgets/lib/jquery/AUTHORS.txt") )
-# Maintainer: JJ Allaire <jj@rstudio.com>
+# Version: 1.1.1.6
+# Authors@R: c( person("Dan", "Vanderkam", role = c("aut", "cph"), comment = "dygraphs library in htmlwidgets/lib, http://dygraphs.com/"), person("Petr", "Shevtsov", role = c("cre", "cph"), email = "petr.shevtsov@gmail.com"), person("JJ", "Allaire", role = c("aut")), person(family = "RStudio", role = "cph"), person("Jonathan", "Owen", role = c("aut", "cph")), person("Daniel", "Gromer", role = c("aut", "cph")), person("Benoit", "Thieurmel", role = c("aut", "cph")), person("Kent", "Laukhuf", role = "ctb"), person(family = "jQuery Foundation", role = "cph", comment = "jQuery library"), person(family = "jQuery contributors", role = c("ctb", "cph"), comment = "jQuery library; authors listed in inst/htmlwidgets/lib/jquery/AUTHORS.txt") )
 # URL: https://github.com/rstudio/dygraphs
 # BugReports: https://github.com/rstudio/dygraphs/issues
 # Description: An R interface to the 'dygraphs' JavaScript charting library (a copy of which is included in the package). Provides rich facilities for charting time-series data in R, including highly configurable series- and axis-display and interactive features like zoom/pan and series/point highlighting.
@@ -89,12 +86,13 @@ extra:
 # Imports: magrittr, htmlwidgets (>= 0.6), htmltools (>= 0.3.5), zoo (>= 1.7-10), xts (>= 0.9-7)
 # Suggests: testthat
 # Enhances: rmarkdown (>= 0.3.3), shiny (>= 0.10.2.1)
-# RoxygenNote: 5.0.1
+# RoxygenNote: 6.0.1
 # NeedsCompilation: no
-# Packaged: 2017-01-04 13:43:02 UTC; jjallaire
-# Author: Dan Vanderkam [aut, cph] (dygraphs library in htmlwidgets/lib, http://dygraphs.com/), JJ Allaire [aut, cre] (R interface), RStudio [cph], Jonathan Owen [aut, cph], Daniel Gromer [aut, cph], Petr Shevtsov [aut, cph], Benoit Thieurmel [aut, cph], jQuery Foundation [cph] (jQuery library), jQuery contributors [ctb, cph] (jQuery library; authors listed in inst/htmlwidgets/lib/jquery/AUTHORS.txt)
+# Packaged: 2018-07-11 21:29:28 UTC; petr
+# Author: Dan Vanderkam [aut, cph] (dygraphs library in htmlwidgets/lib, http://dygraphs.com/), Petr Shevtsov [cre, cph], JJ Allaire [aut], RStudio [cph], Jonathan Owen [aut, cph], Daniel Gromer [aut, cph], Benoit Thieurmel [aut, cph], Kent Laukhuf [ctb], jQuery Foundation [cph] (jQuery library), jQuery contributors [ctb, cph] (jQuery library; authors listed in inst/htmlwidgets/lib/jquery/AUTHORS.txt)
+# Maintainer: Petr Shevtsov <petr.shevtsov@gmail.com>
 # Repository: CRAN
-# Date/Publication: 2017-01-04 16:34:56
+# Date/Publication: 2018-07-11 22:00:03 UTC
 
 # See
 # http://docs.continuum.io/conda/build.html for
